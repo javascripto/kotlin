@@ -60,10 +60,12 @@ data class Livro(
     }
 }
 
-fun List<Livro>.imprimeComMarcadores() {
-    val joinToString = this.joinToString(separator = "\n") {
-        "- (${it.anoPublicacao}) ${it.titulo} de ${it.autor}"
-    }
+fun List<Livro?>.imprimeComMarcadores() {
+    val joinToString = this
+        .filterNotNull()
+        .joinToString(separator = "\n") {
+            "- (${it.anoPublicacao}) ${it.titulo} de ${it.autor}"
+        }
     println("### Lista de livros ###")
     println(joinToString)
 }
