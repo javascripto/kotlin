@@ -3,7 +3,7 @@ import java.math.RoundingMode
 
 fun main() {
 //    series()
-    metodosAgregadores()
+//    metodosAgregadores()
 //    arrayGenerico()
 //    arrayBigDecimalComVarArgs()
 }
@@ -63,18 +63,27 @@ fun arrayGenerico() {
 fun arrayBigDecimalComVarArgs() {
     val salarios = bigDecimalArrayOf("2800.79", "1499.98", "3200.0", "7200.28", "5200.12")
 
-    val aumento10Porcento = "1.1".toBigDecimal()
-    val cincoMil = "5000".toBigDecimal()
-    val quinhentos = "500".toBigDecimal()
+    val dezPorcento = "1.1".toBigDecimal()
 
-    val novosSalarios = salarios.map { salario ->
-        if (salario < cincoMil) salario + quinhentos
-        else (salario * aumento10Porcento).setScale(2, RoundingMode.UP)
-    }.toTypedArray()
+    val novosSalarios = salarios
+        .map { calcularAumentoSalario(it, dezPorcento) }
+        .toTypedArray()
 
     println("Salários: ${salarios.contentToString()}")
     println("Novos salários: ${novosSalarios.contentToString()}")
+}
 
+// Ctrl + Alt + M = Extrair codigo para função
+
+fun arredondaParaCima(numero: BigDecimal): BigDecimal {
+    return numero.setScale(2, RoundingMode.UP)
+}
+
+fun calcularAumentoSalario(salario: BigDecimal, aumento: BigDecimal): BigDecimal {
+    val cincoMil = "5000".toBigDecimal()
+    val quinhentos = "500".toBigDecimal()
+    return if (salario < cincoMil) salario + quinhentos
+    else arredondaParaCima(salario * aumento)
 }
 
 fun bigDecimalArrayOf(vararg valores: String): Array<BigDecimal> {
