@@ -4,4 +4,5 @@ fun main() {
     aula2()
     aula3()
     aula4()
+    aula5()
 }
